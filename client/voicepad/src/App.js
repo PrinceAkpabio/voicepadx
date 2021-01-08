@@ -4,8 +4,10 @@ function App() {
   const [state, setState] = useState([]);
   useEffect(() => {
     fetch('/api/').then(res => {
-      res.json()
-    })
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(data => setState(data.names))
     return () => {
       
     }
@@ -13,8 +15,9 @@ function App() {
   console.log(state);
   return (
     <div className="App">
-      {state}
-      <h1>HELLO</h1>
+      {state.length > 0 && state.map((item, idx) =>
+        <li key={idx}>{item}</li>
+      )}
     </div>
   );
 }
