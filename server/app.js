@@ -8,12 +8,13 @@ app.set('view engine', 'ejs')
 
 app.use('/', require('./routes/home'))
 app.use('/api/', require('./routes/hello'))
+// app.use('/datt/', require('./routes/helloNew'))
 
-// app.get('/api/', (req, res) => {
-//  res.json({
-//   "Hello": "Prince"
-//  })
-// })
+app.get('/datt/', (req, res) => {
+ res.json({
+  "hello": "Prince"
+ })
+})
 
 // app.get('*', (res, req) => {
 //  res.sendFile(path.join(__dirname + '../client/voicepad/public/index.html'))

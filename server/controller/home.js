@@ -1,3 +1,3 @@
 exports.home = (req, res) => {
- res.send('Hello from Home')
+ res.json({"hello": "NEW-API"})
 }
