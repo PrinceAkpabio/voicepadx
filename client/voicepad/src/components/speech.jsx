@@ -16,14 +16,14 @@ const Speech = () => {
   const textField = textRef.current;
   console.log(textField);
 
-  useEffect(() => {
-    if (sessionStorage.getItem('First')) {
-      textField.value = sessionStorage.getItem('First');
-    }
-    // textField.addEventListener('change', () => {
-    //   sessionStorage.setItem('First', textField.value)
-    // })
-  }, [textField])
+  // useEffect(() => {
+  //   if (sessionStorage.getItem('First')) {
+  //     textField.value = sessionStorage.getItem('First');
+  //   }
+  //   // textField.addEventListener('change', () => {
+  //   //   sessionStorage.setItem('First', textField.value)
+  //   // })
+  // }, [textField])
 
   // CHANGE COPY SPAN TEXT
   useEffect(() => {

@@ -1,38 +1,41 @@
 import React, {useState, useEffect} from 'react';
-import Speech from './components/speech';
-
+import { Switch, Route, Redirect, useParams } from 'react-router-dom'
+import {UserContext} from '../src/data-requests/usercontext'
+import Landing from './pages/landing';
+import AccessPage from './pages/signinandsignup';
+import User from './pages/user';
 function App() {
-  const [state, setState] = useState([]);
-  const [newdata, setNew] = useState([]);
-  useEffect(() => {
-    fetch('/api/').then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-    }).then(data => setState(data.names))
-    return () => {
+  const [user, setUser] = useState({
+  name: '',
+  username: '',
+  email: '',
+  password: '',
+  
+ });
+  const { name } = useParams();
+  
+  // setUser(Users)
+  // useEffect(() => {
+  //   fetch('/user/').then(res => {
+  //     if (res.ok) {
+  //       return res.json()
+  //     }
+  //   }).then(data => setUser(data.names))
+  //   return () => {
       
-    }
-  }, [])
-  useEffect(() => {
-    fetch('/datt/').then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-    }).then(data => setNew(data.hello))
-    return () => {
-      
-    }
-  }, [])
-  console.log(state);
-  console.log(newdata);
+  //   }
+  // }, [])
+console.log('App State',user);
   return (
     <div className="App">
-      {state.length > 0 && state.map((item, idx) =>
-        <li key={idx}>{item}</li>
-      )}
-      {newdata}
-      <Speech/>
+    <UserContext.Provider value={{user, setUser}}>
+        <Switch>
+          <Route exact path='/home' component = {Landing}  />
+          <Route exact path='/login' component = {AccessPage}  />
+          <Route path='/profile/:name' component={User} />
+          <Redirect from='/' to='/home' /> 
+      </Switch>
+    </UserContext.Provider>
     </div>
   );
 }

@@ -1,26 +1,42 @@
-const express = require('express')
-app = express();
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config()
 
-app.set('view engine', 'ejs')
+app = express();
+const PORT = process.env.PORT || 3001
 
-// ROUTES  
+app.use(cors());
+app.use(express.json());
 
-app.use('/', require('./routes/home'))
-app.use('/api/', require('./routes/hello'))
-// app.use('/datt/', require('./routes/helloNew'))
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri, {
+ useNewUrlParser: true, useUnifiedTopology: true
+});
 
-app.get('/datt/', (req, res) => {
- res.json({
-  "hello": "Prince"
- })
+const connection = mongoose.connection;
+
+connection.once('open', () => {
+ console.log('MongoDB database connection established successfully');
 })
 
-// app.get('*', (res, req) => {
-//  res.sendFile(path.join(__dirname + '../client/voicepad/public/index.html'))
-// })
 
-const PORT = process.env.PORT || 3001
+// ROUTES
+const userRouter = require('./routes/users')
+const notesRouter = require('./routes/notes')
+
+// USERS ROUTE
+app.use('/users', userRouter);
+
+// NOTES ROUTE
+app.use('/notes', notesRouter)
+
+
+
+
 app.listen(PORT, () => {
  console.log(`Listening on port:  ${PORT}`);
 })
+
+
+
