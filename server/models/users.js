@@ -2,10 +2,6 @@ const mongoose = require('mongoose'),
  notes = require('./notes'),
  Schema = mongoose.Schema,
  userSchema = new Schema({
-  name: {
-   type: String,
-   required: true,
-  },
   username: {
    type: String
   },
@@ -17,10 +13,14 @@ const mongoose = require('mongoose'),
    type: String,
    required: true,
   },
+  // roles: [{
+  //  type: mongoose.Schema.Types.ObjectId,
+  //  ref: 'role'
+  // }]
   // notes: [notes.note]
  }, { timestamps: true }),
  
- user = mongoose.model('users', userSchema)
+ users = mongoose.model('users', userSchema)
 
-module.exports = user;
+module.exports = users;
 
