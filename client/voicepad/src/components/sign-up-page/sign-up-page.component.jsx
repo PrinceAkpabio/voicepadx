@@ -89,20 +89,12 @@ const SignUpPagee = () => {
       Register(username.username, email.email, password.password).then(
         (response) => {
           alert(response.data);
+
+          history.push(`/login`);
         }
       );
-      username.username = "";
-      setEmail({
-        email: "",
-      });
-      setPassword({
-        password: "",
-      });
-      setConfirmPassword({
-        confirmPassword: "",
-      });
       // if (history) {
-      //   history.push(`/profile/${username.username}`);
+
       // }
     } catch (error) {
       console.error("Error in creating User Docs", error);
@@ -121,7 +113,7 @@ const SignUpPagee = () => {
       <nav className="signup-nav">
         <img id="nav-image" src={mic} alt="voicepad-logo" />
 
-        <Link id="nav-link" to="signin">
+        <Link id="nav-link" to="/login">
           Sign In
         </Link>
       </nav>
@@ -173,7 +165,7 @@ const SignUpPagee = () => {
 
         <small className="alternative">
           Already have an account?{" "}
-          <Link id="alt" to="/signin">
+          <Link id="alt" to="/login">
             Sign In
           </Link>
         </small>

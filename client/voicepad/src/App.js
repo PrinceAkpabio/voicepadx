@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Switch, Route, Redirect, useParams } from 'react-router-dom'
 import {UserContext} from '../src/data-requests/usercontext'
+import SignInPagee from './components/sign-in-page/sign-in.component';
 import Landing from './pages/landing';
 import AccessPage from './pages/signinandsignup';
 import User from './pages/user';
@@ -31,7 +32,8 @@ console.log('App State',user);
     <UserContext.Provider value={{user, setUser}}>
         <Switch>
           <Route exact path='/home' component = {Landing}  />
-          <Route exact path='/login' component = {AccessPage}  />
+          <Route exact path='/signup' component = {AccessPage}  />
+          <Route exact path='/login' component = {SignInPagee}  />
           <Route path='/profile/:name' component={User} />
           <Redirect from='/' to='/home' /> 
       </Switch>

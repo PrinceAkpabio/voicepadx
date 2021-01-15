@@ -1,108 +1,134 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../data-requests/usercontext";
+import FormInput from "../custom-input/custom-input.component";
+import CustomButton from "../custom-button/custom-button.component";
+import { Login } from "../../data-requests/auth";
+import { Link, useHistory } from "react-router-dom";
+import mic from "../../Assets/mic.png";
 
-import './sign-in.styles.scss';
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+const validateForm = (errors) => {
+  let valid = true;
+  Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+  return valid;
+};
 
-import { ReactComponent as Logo } from '../../Assets/netflixlogo2.svg';
-import { Link } from 'react-router-dom';
-import SignInFormInput from '../../components/signin-form-input/signin-form-input.component';
-import SignInButton from '../../components/signin-button/signin-button.component';
+const SignInPagee = () => {
+  const { user, setUser } = useContext(UserContext);
+  const [username, setUsername] = useState({
+    username: "",
+  });
+  const [password, setPassword] = useState({
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
 
-import { auth, signInWithGoogle } from '../../firebase/firebase.utilis';
+  const history = useHistory();
 
-class SignInPage extends Component {
-    constructor(props) {
-        super(props);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-        this.state = {
-            email: '',
-            password: ''
-        }
+    switch (name) {
+      case "username":
+        errors.username =
+          value.length < 5
+            ? "Full Name must be at least 5 characters long!"
+            : "";
+        break;
+      case "password":
+        errors.password =
+          value.length < 8
+            ? "Password must be at least 8 characters long!"
+            : "";
+        break;
+      default:
+        break;
     }
 
-    handleChange = e => {
-        const { name, value } = e.target;
+    event.target.name === "username"
+      ? setUsername({ [name]: value })
+      : event.target.name === "password"
+      ? setPassword({ [name]: value })
+      : alert("Wrong form Selection");
+  };
 
-        this.setState({
-            [name]: value
-        })
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (validateForm(errors)) {
+      console.info("Valid Form");
+    } else {
+      console.error("Invalid Form");
     }
 
-    handleSubmit = async (e) => {
-        e.preventDefault();
+    try {
+      Login(username.username, password.password).then((response) => {
+        //   alert(response.data);
 
-        const { email, password } = this.state;
-        const { history } = this.props;
+        history.push(`/profile/${username.username}`);
+      });
+      // if (history) {
 
-        try {
-            await auth.signInWithEmailAndPassword(email, password);
-
-            this.setState({
-                email: '',
-                password: ''
-            });
-
-            // eslint-disable-next-line no-unused-expressions
-            (history ? history.push('/home') : null)
-            
-        } catch(err) {
-            console.log(err);
-        }
+      // }
+    } catch (error) {
+      console.error("Error in creating User Docs", error);
     }
+  };
 
-    handleGoogleSignin = async (e) => {
-        await signInWithGoogle();
+  console.log(user);
+  console.log(username);
+  console.log(password);
 
-        const { history } = this.props;
-        // eslint-disable-next-line no-unused-expressions
-        (history ? history.push('/home') : null)
-    }
+  return (
+    <div className="sign-up-page">
+      <nav className="signup-nav">
+        <img id="nav-image" src={mic} alt="voicepad-logo" />
 
-    render() {
-        return (
-            <div className="sign-in-container">
-                <div className="container-overlay"></div>
-                <Link to="/" className="home-link">
-                    <Logo className="logo" />
-                </Link>
-                
+        <Link id="nav-link" to="/signup">
+          Sign Up
+        </Link>
+      </nav>
 
-                <form className="sign-in-form" onSubmit={this.handleSubmit}>
-                    <div className="form-overlay"></div>
-                    <div className="form-content">
-                        <h2 className="form-title">Sign In</h2>
+      <div className="signup-content">
+        <h3 className="title">Have an account ? Sign In</h3>
 
-                        <SignInFormInput type="email" placeholder="Email Address" name="email" handleChange={this.handleChange} value={this.state.email} required />
-                        <SignInFormInput type="password" placeholder="Password" name="password" handleChange={this.handleChange} value={this.state.password} required />
+        <form className="signup-form" onSubmit={handleSubmit}>
+          <FormInput
+            type="text"
+            name="username"
+            handleChange={handleChange}
+            value={username}
+            label="User Name"
+            errors={errors.username}
+            required
+          />
+          <FormInput
+            type="password"
+            name="password"
+            handleChange={handleChange}
+            value={password}
+            label="Password"
+            errors={errors.password}
+            required
+          />
 
-                        <SignInButton type="submit">
-                            Sign In
-                        </SignInButton>
+          <CustomButton type="submit">SIGN IN</CustomButton>
+        </form>
 
-                        <div className="remember-div">
-                            <input type="checkbox" id="remember-me" name="remember-me" value="remember-me" className="remember-box" />
-                            <label htmlFor="remember-me" className="remember-label">Remember me</label>
-                        </div>
+        <small className="alternative">
+          Don't have an account?{" "}
+          <Link id="alt" to="/signup">
+            Sign Up
+          </Link>
+        </small>
+      </div>
+    </div>
+  );
+};
 
-                        <div className="fb-btn-div">
-                            <button className="fb-btn" onClick={this.handleGoogleSignin}>
-                            <i className="fab fa-google"></i>
-                            Login with Google</button>
-                        </div>
-
-                        <p className="sign-up-text">New to Netflix? <span className="sign-up">
-                        <Link to='/signup' className="sign-up-link">Sign up now</Link>
-                        </span></p>
-
-                        
-                    </div>
-                    
-                </form>
-
-            </div>
-        )
-    }
-}
-
-export default SignInPage;
-
-
+export default SignInPagee;
