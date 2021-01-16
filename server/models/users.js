@@ -13,11 +13,12 @@ const mongoose = require('mongoose'),
    type: String,
    required: true,
   },
-  // roles: [{
-  //  type: mongoose.Schema.Types.ObjectId,
-  //  ref: 'role'
-  // }]
-  // notes: [notes.note]
+  notes: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+   ref: "note"
+  }
+  ]
  }, { timestamps: true }),
  
  users = mongoose.model('users', userSchema)

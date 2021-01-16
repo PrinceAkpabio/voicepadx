@@ -2,6 +2,7 @@ const router = require('express').Router();
 let users = require('../models/users');
 // const { role, ROLES } = require('../models/role'); 
 const secret = process.env.SECRET;
+
 const checkDuplicateUsernameOrEmail = require('../config/verifySignUp');
 const verifyToken = require('../config/authJwt');
 
@@ -81,10 +82,11 @@ router.route('/signin').post((req, res) => {
 
 
 // GET SINGLE USER
-router.route('/user/:id').get([verifyToken], (req, res) => {
+router.route('/user/:id').get([verifyToken],  (req, res) => {
   const id = req.params.id
-  users.findById(id)
-    .then(user => res.json(user))
+
+  users.findById(id).populate('notes')
+    .then(user => {res.send(user)})
     .catch(err => res.status(400)
     .json('Error occured while fetching user: ' , err))
 })
@@ -97,22 +99,22 @@ router.route('/user/:id').delete((req, res) => {
     .catch(err => res.status(400).json('Error deleting user: ' , err))
 })
 // UPDATE SINGLE USER
-// router.route('/user/:id').post((req, res) => {
-//   const id = req.params.id;
-//   const username = req.body.username;
-//   const email = req.body.email;
-//   const password = req.body.password;
+router.route('/user/:id').post((req, res) => {
+  const id = req.params.id;
+  const username = req.body.username;
+  const email = req.body.email;
+  const password = req.body.password;
 
-//   const updateUser = {
-//     username,
-//     email,
-//     password
-//   }
+  const updateUser = {
+    username,
+    email,
+    password
+  }
   
-//   users.findByIdAndUpdate(id, updateUser)
-//     .then(() => res.json("User Updated!"))
-//     .catch(err => res.status(400)
-//     .json('Error updating user: ',  err))
-// })
+  users.findByIdAndUpdate(id, updateUser)
+    .then(() => res.json("User Updated!"))
+    .catch(err => res.status(400)
+    .json('Error updating user: ',  err))
+})
 
 module.exports = router;

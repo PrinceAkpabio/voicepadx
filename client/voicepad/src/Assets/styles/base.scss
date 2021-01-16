@@ -1,11 +1,13 @@
 @import "./_app";
 @import "./_notelist";
+// @import "./_UpdateNote";
 // @import "./_signin-form-input.styles";
 // @import "./_signin-button.styles";
 // @import "./_sign-in.styles";
 @import "./_sign-up-page.styles";
 @import "./_custom-button.styles";
 @import "./_custom-input.styles";
+@import "./_modal";
 
 * {
   box-sizing: border-box;
@@ -33,4 +35,7 @@ body {
 
 h2 {
   font-size: 1.2rem;
+}
+ul {
+  list-style-type: none;
 }

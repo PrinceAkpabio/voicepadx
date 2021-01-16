@@ -1,5 +1,15 @@
 const router = require('express').Router();
 let notes = require('../models/notes');
+let users = require('../models/users');
+
+
+ app.use((req, res, next) => {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
 
 // GET NOTES
 router.route('/').get((req, res) => {
@@ -10,18 +20,30 @@ router.route('/').get((req, res) => {
 
 
 // CREATE NOTES
-router.route('/add').post((req, res) => {
- const username = req.body.username;
- const note = req.body.note;
+router.route('/add').post(async (req, res, next) => {
+ const title = req.body.titlle;
+//  const image = req.body.image;
+ const userId = req.body.id
 
- const newNotes = new notes({
-  username,
-  note,
- })
+  const newNote = new notes({
+    title
+    // image,
+  });
 
- newNotes.save()
-  .then(() => res.json('New Notes Added!'))
- .catch(err => res.status(400).json('Error creating Notes: ', err))
+  newNote.save()
+    .then(async (note) =>{
+      // res.send( note)
+      
+    return await users.findByIdAndUpdate(
+        userId,
+        { $push: { notes: note._id } },
+        { new: true, useFindAndModify: false }
+      );
+    }).then(async() => {
+     await res.json('Note saved and added to User')
+    })
+    .catch(err => res.status(400).json('Error creating Notes: ', err))
+  next()
 })
 
 
@@ -47,12 +69,11 @@ router.route('/note/:id').delete((req, res) => {
 router.route('/note/:id').post(
  (req, res) => {
   const id = req.params.id
-  const username = req.body.username;
-  const note = req.body.note;
+  const title = req.body.titlle;
+  
 
   const updatedNote = {
-     username,
-     note,
+     title,
     }
 
   notes.findByIdAndUpdate(id, updatedNote)

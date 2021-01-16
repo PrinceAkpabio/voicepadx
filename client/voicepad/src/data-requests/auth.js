@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const API_URL = "http://localhost:5000/users/"
 
@@ -27,7 +28,8 @@ const Login = (username, password) => {
 };
 
 const Logout = () => {
- localStorage.removeItem("user");
+  localStorage.removeItem("user");
+  // useHistory().push('/home')
 };
 
 const GetCurrentUser = () => {

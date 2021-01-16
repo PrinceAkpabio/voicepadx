@@ -1,39 +1,29 @@
 import React, {useState, useEffect} from 'react';
 import { Switch, Route, Redirect, useParams } from 'react-router-dom'
 import {UserContext} from '../src/data-requests/usercontext'
+import PrivateRoute from './components/PrivateRoute';
 import SignInPagee from './components/sign-in-page/sign-in.component';
 import Landing from './pages/landing';
 import AccessPage from './pages/signinandsignup';
 import User from './pages/user';
 function App() {
-  const [user, setUser] = useState({
-  name: '',
-  username: '',
-  email: '',
-  password: '',
-  
- });
+  const [user, setUser] = useState({});
   const { name } = useParams();
-  
-  // setUser(Users)
-  // useEffect(() => {
-  //   fetch('/user/').then(res => {
-  //     if (res.ok) {
-  //       return res.json()
-  //     }
-  //   }).then(data => setUser(data.names))
-  //   return () => {
-      
-  //   }
-  // }, [])
 console.log('App State',user);
+
   return (
     <div className="App">
-    <UserContext.Provider value={{user, setUser}}>
+      <UserContext.Provider value={{ user, setUser }}>
+        
         <Switch>
           <Route exact path='/home' component = {Landing}  />
           <Route exact path='/signup' component = {AccessPage}  />
-          <Route exact path='/login' component = {SignInPagee}  />
+          <Route exact path='/login' component={SignInPagee} />
+          {/* <PrivateRoute
+            Auth={user}
+            path='/profile/:name'>
+            <User />
+          </PrivateRoute> */}
           <Route path='/profile/:name' component={User} />
           <Redirect from='/' to='/home' /> 
       </Switch>

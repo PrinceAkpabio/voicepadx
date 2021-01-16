@@ -16,7 +16,7 @@ const validateForm = (errors) => {
 };
 
 const SignInPagee = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, UpdateGState } = useContext(UserContext);
   const [username, setUsername] = useState({
     username: "",
   });
@@ -68,9 +68,12 @@ const SignInPagee = () => {
 
     try {
       Login(username.username, password.password).then((response) => {
-        //   alert(response.data);
+        console.log("login object", response);
 
-        history.push(`/profile/${username.username}`);
+        if (response.accessToken) {
+          UpdateGState(response);
+          history.push(`/profile/${username.username}`);
+        }
       });
       // if (history) {
 
