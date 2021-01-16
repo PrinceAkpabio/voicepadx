@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 
 import Note from "./Note";
-import Modal from "./modal";
+
 import { UserContext } from "../data-requests/usercontext";
+import NewNote from "./NewNote";
 
 const NotesList = () => {
   const { user, setUser } = useContext(UserContext);
@@ -12,14 +13,22 @@ const NotesList = () => {
   return (
     <div className="notes container">
       <ul className="note-list">
+        {notes.length > 0 && (
+          <li className="speech">
+            <NewNote id={user._id} />
+          </li>
+        )}
+
         {notes.length > 0 ? (
           notes.map((note) => (
             <li key={note._id} className="speech">
-              <Note title={note.title} />
+              <Note id={note._id} title={note.title} />
             </li>
           ))
         ) : (
-          <li className="speech">Add New Speech</li>
+          <li className="speech">
+            <NewNote id={user._id} />
+          </li>
         )}
       </ul>
     </div>

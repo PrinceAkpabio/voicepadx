@@ -1,6 +1,9 @@
 const router = require('express').Router();
+const mongoose = require('mongoose')
 let notes = require('../models/notes');
 let users = require('../models/users');
+mongoose.set('useFindAndModify', false);
+mongoose.set('returnOriginal', false);
 
 
  app.use((req, res, next) => {
@@ -20,8 +23,8 @@ router.route('/').get((req, res) => {
 
 
 // CREATE NOTES
-router.route('/add').post(async (req, res, next) => {
- const title = req.body.titlle;
+router.route('/add').post(async (req, res) => {
+ const title = req.body.title;
 //  const image = req.body.image;
  const userId = req.body.id
 
@@ -31,7 +34,7 @@ router.route('/add').post(async (req, res, next) => {
   });
 
   newNote.save()
-    .then(async (note) =>{
+    .then(async (note) => {
       // res.send( note)
       
     return await users.findByIdAndUpdate(
@@ -43,7 +46,6 @@ router.route('/add').post(async (req, res, next) => {
      await res.json('Note saved and added to User')
     })
     .catch(err => res.status(400).json('Error creating Notes: ', err))
-  next()
 })
 
 
@@ -51,7 +53,7 @@ router.route('/add').post(async (req, res, next) => {
 router.route('/note/:id').get((req, res) => {
  const id = req.params.id;
 
- notes.findById(id)
+  notes.findById(id)
   .then(note => res.json(note))
   .catch(err => res.status(400).json("Error fetching note: ", err))
 })
@@ -69,14 +71,15 @@ router.route('/note/:id').delete((req, res) => {
 router.route('/note/:id').post(
  (req, res) => {
   const id = req.params.id
-  const title = req.body.titlle;
+  const title = req.body.title;
   
 
   const updatedNote = {
-     title,
+     title: title,
     }
 
-  notes.findByIdAndUpdate(id, updatedNote)
+  notes.findByIdAndUpdate(id, updatedNote,
+    )
    .then(() => res.json('Note Updated')).catch(err => res.status(400).json('Error in updating note: ', err))
  })
 

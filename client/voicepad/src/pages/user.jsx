@@ -5,6 +5,7 @@ import axios from "axios";
 import NotesList from "../components/NotesList";
 
 import { UserContext } from "../data-requests/usercontext";
+import CustomButton from "../components/custom-button/custom-button.component";
 
 const GetCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
@@ -27,7 +28,7 @@ const User = () => {
       },
     })
       .then((response) => response.json())
-      .then(async (data) => await setUser(data))
+      .then((data) => setUser(data))
       .catch((err) => console.log("Fech Error: ", err));
   }, [setUser]);
 
@@ -37,9 +38,12 @@ const User = () => {
   };
 
   return (
-    <div>
-      Hello{user.username}
-      <button>SIGN OUT</button>
+    <div className="userPage ">
+      <CustomButton className="custom-button">SIGN OUT</CustomButton>
+      <h2 className="welcome-msg">
+        Hello
+        <span id="username">{user.username}</span>
+      </h2>
       <NotesList />
     </div>
   );

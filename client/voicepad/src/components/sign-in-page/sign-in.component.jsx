@@ -6,9 +6,6 @@ import { Login } from "../../data-requests/auth";
 import { Link, useHistory } from "react-router-dom";
 import mic from "../../Assets/mic.png";
 
-const validEmailRegex = RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-);
 const validateForm = (errors) => {
   let valid = true;
   Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
@@ -16,7 +13,7 @@ const validateForm = (errors) => {
 };
 
 const SignInPagee = () => {
-  const { user, UpdateGState } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState({
     username: "",
   });
@@ -71,7 +68,7 @@ const SignInPagee = () => {
         console.log("login object", response);
 
         if (response.accessToken) {
-          UpdateGState(response);
+          setUser(response);
           history.push(`/profile/${username.username}`);
         }
       });

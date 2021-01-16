@@ -57,7 +57,7 @@ const Modal = forwardRef((props, ref) => {
             >
               <animated.div style={animation} className="animated">
                 <div className="note">
-                  <UpdateNote title={props.title} />
+                  <UpdateNote Id={props.id} Title={props.title} />
                 </div>
               </animated.div>
             </div>,

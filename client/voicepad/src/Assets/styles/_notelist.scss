@@ -71,6 +71,7 @@
       }
 
       .speech-wrapper {
+        // position: relative;
         display: grid;
         grid-template-columns: 1fr;
         grid-gap: 1rem;
@@ -116,6 +117,16 @@
             background-color: rgb(11, 11, 85);
             color: rgb(252, 191, 191);
           }
+        }
+        #delete-btn {
+          position: absolute;
+          font-size: 1rem;
+          // height: 3rem;
+          // width: 2rem;
+          top: 1.3rem;
+          right: 0.8rem;
+          color: rgb(252, 191, 191);
+          z-index: 40;
         }
       }
     }

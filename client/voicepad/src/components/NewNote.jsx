@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { UserContext } from "../data-requests/usercontext";
 
 import axios from "axios";
 import useSound from "use-sound";
@@ -8,9 +7,8 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-const UpdateNote = ({ Title, Id }) => {
-  const { user, setUser } = useContext(UserContext);
-  const [currentText, setCurrentText] = useState(Title);
+const NewNote = ({ id }) => {
+  const [currentText, setCurrentText] = useState("");
   const [copy, setCopySuccess] = useState("Copy");
   const { transcript, resetTranscript } = useSpeechRecognition;
 
@@ -21,9 +19,9 @@ const UpdateNote = ({ Title, Id }) => {
         setCopySuccess("Copy");
       }
     }, 2000);
-    console.log("TITLE: ", Title, "ID: ", Id);
+    console.log("ID: ", id);
     return () => clearTimeout(copyTimer);
-  }, [copy, setCurrentText, Title, Id]);
+  }, [copy, id]);
 
   // SOUND FOR MICROPHONE
   const [play] = useSound(Chime);
@@ -42,7 +40,7 @@ const UpdateNote = ({ Title, Id }) => {
     await SpeechRecognition.startListening();
     const result = JSON.stringify(transcript);
     setCurrentText(result);
-    console.log(currentText);
+    // console.log(currentText);
     //   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     //    return null
     //  }
@@ -54,23 +52,25 @@ const UpdateNote = ({ Title, Id }) => {
     setCurrentText(e.target.value);
   };
 
-  // Update Note
+  // Add Note
   const title = currentText;
-  const id = Id;
   console.log(currentText);
+
   const handleSubmit = async () => {
-    await axios.post(`http://localhost:5000/notes/note/${id}`, {
-      title,
-      id,
-    });
+    axios
+      .post(`http://localhost:5000/notes/add`, {
+        title,
+        id,
+      })
+      .then(async (response) => await alert(response.data));
+
+    await setCurrentText("");
   };
 
   return (
     <>
       <div className="speechTitle">
-        <h2 className="title">
-          Click the microphone and wait half a second before speaking:{" "}
-        </h2>
+        <h2 className="title">Add a new note by writing in the text area</h2>
 
         <span className="copy-container">
           <i onClick={handleCopy} id="copy" className="far fa-copy">
@@ -104,4 +104,4 @@ const UpdateNote = ({ Title, Id }) => {
   );
 };
 
-export default UpdateNote;
+export default NewNote;
