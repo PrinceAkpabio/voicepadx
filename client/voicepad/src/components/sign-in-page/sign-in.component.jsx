@@ -3,7 +3,7 @@ import { UserContext } from "../../data-requests/usercontext";
 import FormInput from "../custom-input/custom-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import { Login } from "../../data-requests/auth";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import mic from "../../Assets/mic.png";
 
 const validateForm = (errors) => {
@@ -69,6 +69,7 @@ const SignInPagee = () => {
 
         if (response.accessToken) {
           setUser(response);
+          // <Redirect to="/" />;
           history.push(`/profile/${username.username}`);
         }
       });

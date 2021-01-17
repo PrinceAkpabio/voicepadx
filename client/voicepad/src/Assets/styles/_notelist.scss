@@ -127,6 +127,11 @@
           right: 0.8rem;
           color: rgb(252, 191, 191);
           z-index: 40;
+          cursor: pointer;
+
+          &:hover {
+            color: #ff1313;
+          }
         }
       }
     }

@@ -15,7 +15,7 @@ const Note = ({ title, id }) => {
     axios
       .delete(`http://localhost:5000/notes/note/${id}`)
       .then((response) => alert(response.data));
-    window.location.reload(true);
+    // window.location.reload(true);
   };
   return (
     <>

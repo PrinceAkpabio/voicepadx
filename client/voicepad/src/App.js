@@ -9,22 +9,30 @@ import User from './pages/user';
 function App() {
   const [user, setUser] = useState({});
   const { name } = useParams();
-console.log('App State',user);
+  console.log('App State: ',user);
+  const Name = user.username;
+  console.log('User Name: ',Name);
+  const TOKEN = user.password || user.accessToken;
+  console.log('Token: ',TOKEN);
+
 
   return (
     <div className="App">
       <UserContext.Provider value={{ user, setUser }}>
         
         <Switch>
+
+          
           <Route exact path='/home' component = {Landing}  />
           <Route exact path='/signup' component = {AccessPage}  />
           <Route exact path='/login' component={SignInPagee} />
-          {/* <PrivateRoute
-            Auth={user}
-            path='/profile/:name'>
+          <PrivateRoute
+            Auth={TOKEN}
+            path={`/profile/${Name}`}>
             <User />
-          </PrivateRoute> */}
-          <Route path='/profile/:name' component={User} />
+          </PrivateRoute>
+          {/* <Route path='/profile/:name' component={User} /> */}
+       
           <Redirect from='/' to='/home' /> 
       </Switch>
     </UserContext.Provider>

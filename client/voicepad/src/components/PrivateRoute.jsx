@@ -1,17 +1,23 @@
 import React from "react";
 
-import { Redirect, Route, Render } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
-const PrivateRoute = ({ children, Auth, ...rest }) => {
+const PrivateRoute = ({ children, path, Auth, ...rest }) => {
   console.log("Private Route", Auth);
   return (
     <Route
       {...rest}
-      render={() => {
-        return Auth.accessToken ? (
-          <Redirect to={`/profile/${Auth.username}`}>children</Redirect>
+      path={path}
+      render={({ location }) => {
+        return Auth ? (
+          children
         ) : (
-          <Redirect to="/login" />
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
         );
       }}
     />
