@@ -87,14 +87,6 @@ const SignInPagee = () => {
 
   return (
     <div className="sign-up-page">
-      <nav className="signup-nav">
-        <img id="nav-image" src={mic} alt="voicepad-logo" />
-
-        <Link id="nav-link" to="/signup">
-          Sign Up
-        </Link>
-      </nav>
-
       <div className="signup-content">
         <h3 className="title">Have an account ? Sign In</h3>
 

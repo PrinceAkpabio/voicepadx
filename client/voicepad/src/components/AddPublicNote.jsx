@@ -1,16 +1,24 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
-import axios from "axios";
+import PublicNote from "./PublicNote";
+
 import useSound from "use-sound";
 import Chime from "../Assets/chime.wav";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-const NewNote = ({ id, fetchUser }) => {
+const AddPublicNote = ({ id }) => {
   const [currentText, setCurrentText] = useState("");
+  const [PublicUser, setPublicUser] = useState("");
   const [copy, setCopySuccess] = useState("Copy");
   const { transcript, resetTranscript } = useSpeechRecognition;
+
+  useEffect(() => {
+    const publicUser = localStorage.getItem("public-user");
+    console.log(publicUser);
+    setPublicUser(publicUser);
+  }, []);
 
   // CHANGE COPY SPAN TEXT
   useEffect(() => {
@@ -52,26 +60,18 @@ const NewNote = ({ id, fetchUser }) => {
     setCurrentText(e.target.value);
   };
 
-  // Add Note
-  const title = currentText;
-  console.log(currentText);
-
-  const handleSubmit = async () => {
-    await axios
-      .post(`http://localhost:5000/notes/add`, {
-        title,
-        id,
-      })
-      .then(async (response) => await alert(response.data));
-
-    await setCurrentText("");
-
-    await fetchUser();
+  // Submit Note
+  const handleSumbit = () => {
+    localStorage.setItem("public-user", [currentText]);
+    const publicUser = localStorage.getItem("public-user");
+    console.log(publicUser);
+    setPublicUser(publicUser);
+    setCurrentText("");
   };
 
   return (
-    <>
-      <div className="speechTitle">
+    <div className="noteContainer">
+      <div className="noteTitle">
         <h2 className="title">Add a new note by writing in the text area</h2>
 
         <span className="copy-container">
@@ -80,7 +80,7 @@ const NewNote = ({ id, fetchUser }) => {
           </i>
         </span>
       </div>
-      <div className="speech-wrapper">
+      <div className="note-wrapper">
         <textarea
           type="text"
           onChange={handleChange}
@@ -96,14 +96,17 @@ const NewNote = ({ id, fetchUser }) => {
         ></i> */}
         <i
           id="mic"
-          onClick={handleSubmit}
+          onClick={handleSumbit}
           // className="fas fa-microphone"
         >
           SUBMIT
         </i>
       </div>
-    </>
+      {PublicUser ? (
+        <PublicNote publicUser={PublicUser} setNote={setPublicUser} />
+      ) : null}
+    </div>
   );
 };
 
-export default NewNote;
+export default AddPublicNote;

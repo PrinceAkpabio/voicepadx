@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Switch, Route, Redirect, useParams } from 'react-router-dom'
 import {UserContext} from '../src/data-requests/usercontext'
+import Footer from './components/Footer';
+import Naviagtion from './components/navigation/naviagtion';
 import PrivateRoute from './components/PrivateRoute';
 import SignInPagee from './components/sign-in-page/sign-in.component';
 import Landing from './pages/landing';
@@ -17,9 +19,9 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="App container">
       <UserContext.Provider value={{ user, setUser }}>
-        
+        <Naviagtion />
         <Switch>
 
           
@@ -34,7 +36,8 @@ function App() {
           {/* <Route path='/profile/:name' component={User} /> */}
        
           <Redirect from='/' to='/home' /> 
-      </Switch>
+        </Switch>
+        <Footer />
     </UserContext.Provider>
     </div>
   );

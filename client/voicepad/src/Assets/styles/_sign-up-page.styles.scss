@@ -6,29 +6,6 @@
 
   height: 100vh;
 
-  .signup-nav {
-    position: sticky;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 15%;
-    padding: 35px;
-    border-bottom: 0.01px rgba(128, 128, 128, 0.15) solid;
-
-    #nav-image {
-      object-fit: contain;
-      width: 80px;
-      height: 40px;
-    }
-
-    #nav-link {
-      font-size: 19px;
-      font-weight: 700;
-      color: rgba(255, 246, 246, 0.8);
-    }
-  }
-
   .signup-content {
     display: flex;
     flex-flow: column;

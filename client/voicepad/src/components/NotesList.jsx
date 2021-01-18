@@ -5,7 +5,7 @@ import Note from "./Note";
 import { UserContext } from "../data-requests/usercontext";
 import NewNote from "./NewNote";
 
-const NotesList = () => {
+const NotesList = ({ fetchUser }) => {
   const { user, setUser } = useContext(UserContext);
   const notes = user.notes;
   console.log("NOTES: ", notes);
@@ -15,19 +15,19 @@ const NotesList = () => {
       <ul className="note-list">
         {notes.length > 0 && (
           <li className="speech">
-            <NewNote id={user._id} />
+            <NewNote fetchUser={fetchUser} id={user._id} />
           </li>
         )}
 
         {notes.length > 0 ? (
           notes.map((note) => (
             <li key={note._id} className="speech">
-              <Note id={note._id} title={note.title} />
+              <Note fetchUser={fetchUser} id={note._id} title={note.title} />
             </li>
           ))
         ) : (
           <li className="speech">
-            <NewNote id={user._id} />
+            <NewNote fetchUser={fetchUser} id={user._id} />
           </li>
         )}
       </ul>

@@ -4,19 +4,23 @@ import axios from "axios";
 
 import Modal from "./modal";
 // import { response } from "express";
-const Note = ({ title, id }) => {
+const Note = ({ title, id, fetchUser }) => {
   const modalRef = useRef();
   const openModal = () => {
     modalRef.current.openModall();
   };
 
   // DELETE NOTE
-  const handleDelete = () => {
-    axios
+  const handleDelete = async () => {
+    await axios
       .delete(`http://localhost:5000/notes/note/${id}`)
       .then((response) => alert(response.data));
-    // window.location.reload(true);
+    await fetchUser();
   };
+
+  function truncate(str, n) {
+    return str?.length > n ? str.substring(0, n - 1) + "..." : str;
+  }
   return (
     <>
       <Modal ref={modalRef} title={title} id={id} />
@@ -27,7 +31,7 @@ const Note = ({ title, id }) => {
           className="fas fa-trash-alt"
         ></i>
         <Link to="#" onClick={openModal}>
-          <h3 className="text">{title}</h3>
+          <h3 className="text">{truncate(title, 100)}</h3>
         </Link>
       </div>
     </>
