@@ -1,0 +1,30 @@
+// Color scheme:
+$primary: #02021e;
+$accent: #ffae9a;
+$sub1: #262147;
+$sub2: #0a0c2d;
+$text-link: #2997ff;
+$text-color: #f0f0f0;
+$body-color: #ffff;
+$sub1-filtered: rgba(255, 174, 154, 0.7);
+$glass: #ccccd2;
+$primary-filtered: rgba(2, 2, 30, 0.5);
+
+// Responsive
+$mobile-menu: 855px;
+$tab-sm: 695px;
+$mobile-sm: 320px;
+$mobile-md: 375px;
+$mobile-lg: 425px;
+
+// Mixins
+
+@mixin transition-ease {
+  transition: all 0.5s ease-in-out;
+}
+@mixin transition-slow {
+  transition: all 1s ease-in-out;
+}
+@mixin transition-slower {
+  transition: all 1.5s ease-in-out;
+}

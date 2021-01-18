@@ -1,0 +1,21 @@
+.userPage {
+  text-align: center;
+  margin: 3rem 0 0;
+  position: relative;
+
+  .welcome-msg {
+    font-size: 1.7rem;
+    letter-spacing: 0.2rem;
+    & > #username {
+      color: rgb(252, 191, 191);
+      margin-left: 0.3rem;
+    }
+  }
+
+  .custom-button {
+    position: absolute;
+    top: -2.2rem;
+    right: 0.4rem;
+    padding: 0 0.6rem;
+  }
+}

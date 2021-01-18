@@ -1,0 +1,228 @@
+.LandingPage {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  justify-items: center;
+  padding: 0 2rem;
+  align-items: center;
+  list-style-type: none;
+  margin: 1rem 0 3rem;
+  & > .LandingPage-info {
+    display: grid;
+    width: 100%;
+    grid-gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: center;
+    justify-items: center;
+  }
+
+  & > .noteContainer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+    margin: 4rem 0;
+    height: auto;
+    width: 100%;
+
+    & > .noteTitle {
+      display: grid;
+      grid-template-columns: 1fr 80px;
+      grid-template-rows: 1fr;
+      grid-gap: 0.5rem;
+      // max-width: 40rem;
+      // justify-content: center;
+      // align-items: center;
+      text-align: left;
+      height: 100%;
+
+      // .title {
+      //   // justify-self: flex-end;
+      //   // align-self: flex-end;
+      // }
+      .copy-container {
+        // position: relative;
+        display: flex;
+        height: 100%;
+        width: 100%;
+        justify-items: center;
+
+        .fa-copy {
+          // position: relative;
+
+          align-self: center;
+          text-align: center;
+          font-size: 1.5rem;
+          cursor: pointer;
+          z-index: 2;
+
+          .tooltip {
+            position: absolute;
+            padding: 0.7rem;
+            font-size: 0.9rem;
+            visibility: hidden;
+            background-color: rgba(252, 191, 191, 0.5);
+            color: #f0f0f0;
+            border-radius: 0.6rem;
+            top: 45px;
+            right: 25px;
+          }
+          &:hover > .tooltip {
+            visibility: visible;
+            cursor: help;
+            z-index: -1;
+          }
+        }
+      }
+    }
+
+    .note-wrapper {
+      // position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 1rem;
+      max-width: 40rem;
+      border: 1px solid #f0f0f0;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      -webkit-box-shadow: 0px 10px 13px -7px rgba(204, 204, 204, 0.5),
+        5px 5px 13px 4px rgba(204, 204, 204, 0);
+      box-shadow: 0px 10px 13px -9px rgba(204, 204, 204, 0.5),
+        5px 5px 13px 4px rgba(204, 204, 204, 0);
+      overflow: hidden;
+      a {
+        text-decoration: none;
+      }
+      .text {
+        text-align: justify;
+        background-color: transparent;
+        border: none;
+        color: #f0f0f0;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        font-size: 1.5rem;
+        width: auto;
+        height: auto;
+
+        &:focus {
+          border: none;
+          outline: none;
+        }
+      }
+
+      #mic {
+        font-size: 2rem;
+        cursor: pointer;
+        background-color: rgb(22, 22, 94);
+        padding: 0.7rem 0;
+        height: auto;
+        width: auto;
+        text-align: center;
+
+        &:hover {
+          background-color: rgb(11, 11, 85);
+          color: rgb(252, 191, 191);
+        }
+      }
+      #delete-btn {
+        position: absolute;
+        font-size: 1rem;
+        // height: 3rem;
+        // width: 2rem;
+        top: 1.3rem;
+        right: 0.8rem;
+        color: rgb(252, 191, 191);
+        z-index: 40;
+        cursor: pointer;
+
+        &:hover {
+          color: #ff1313;
+        }
+      }
+    }
+
+    .note-wrapper-text {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 1rem;
+      max-width: 40rem;
+      border: 1px solid #f0f0f0;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      -webkit-box-shadow: 0px 10px 13px -7px rgba(204, 204, 204, 0.5),
+        5px 5px 13px 4px rgba(204, 204, 204, 0);
+      box-shadow: 0px 10px 13px -9px rgba(204, 204, 204, 0.5),
+        5px 5px 13px 4px rgba(204, 204, 204, 0);
+      overflow: hidden;
+      a {
+        text-decoration: none;
+      }
+      .text {
+        text-align: justify;
+        background-color: transparent;
+        border: none;
+        color: #f0f0f0;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        font-size: 1.5rem;
+        width: auto;
+        height: auto;
+
+        &:focus {
+          border: none;
+          outline: none;
+        }
+      }
+      #delete-btn {
+        position: absolute;
+        font-size: 1rem;
+        // height: 3rem;
+        // width: 2rem;
+        top: 1.3rem;
+        right: 0.8rem;
+        color: rgb(252, 191, 191);
+        z-index: 40;
+        cursor: pointer;
+
+        &:hover {
+          color: #ff1313;
+        }
+      }
+    }
+  }
+}
+// }
+
+@media screen and (min-width: 675px) {
+  & > .LandingPage {
+    & > .noteContainer {
+      .note-wrapper {
+        grid-template-columns: 1fr 50px;
+
+        #mic {
+          justify-self: center;
+          align-self: center;
+          background: none;
+          &:hover {
+            background: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 405px) {
+  & > .LandingPage {
+    .noteContainer {
+      .noteTitle .copy-container .fa-copy {
+        .tooltip {
+          top: 30px;
+        }
+      }
+    }
+  }
+}

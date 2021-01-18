@@ -1,0 +1,66 @@
+$main-color: black;
+$sub-color: grey;
+$label-color: rgb(247, 170, 27);
+
+@mixin shrinkLabel {
+  top: 0;
+  font-size: 12px;
+  left: 79%;
+  color: $label-color;
+}
+
+.input-group {
+  position: relative;
+  margin: 15px 0;
+  max-width: 22rem;
+
+  .form-input {
+    background: none;
+    background-color: #070741;
+    border: none;
+    border-bottom: 1px $sub-color solid;
+    width: 100%;
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    margin-bottom: 0.5rem;
+    color: #f0f0f0;
+
+    &:focus {
+      outline: none;
+
+      & ~ .label {
+        @include shrinkLabel();
+      }
+    }
+  }
+
+  input[type="password"] {
+    letter-spacing: 0.3rem;
+  }
+
+  .label {
+    position: absolute;
+    top: 10px;
+    left: 6px;
+    color: $sub-color;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.33s all ease-in;
+
+    &.shrink {
+      @include shrinkLabel();
+    }
+  }
+
+  .error {
+    position: relative;
+    width: 100%;
+    color: red;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .input-group {
+    max-width: 16rem;
+  }
+}
