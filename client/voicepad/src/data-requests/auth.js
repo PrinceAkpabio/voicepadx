@@ -12,9 +12,9 @@ const Register = (username, email, password) => {
  });
 };
 
-const Login = (username, password) => {
+const Login = async(username, password) => {
 
- return axios
+ return await axios
   .post(`${API_URL}signin`, {
    username,
    password,
