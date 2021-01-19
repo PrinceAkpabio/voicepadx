@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 const API_URL = "/users/"
 
@@ -12,9 +11,9 @@ const Register = (username, email, password) => {
  });
 };
 
-const Login = (username, password) => {
+const Login = async(username, password) => {
 
- return axios
+ return await axios
   .post(`${API_URL}signin`, {
    username,
    password,
@@ -27,9 +26,13 @@ const Login = (username, password) => {
   });
 };
 
-const Logout = () => {
-  localStorage.removeItem("user");
-  // useHistory().push('/home')
+const useLogOut = (history,setUser) => { 
+  const Logout = () => {
+    history.push("/");
+    localStorage.removeItem("user");
+    setUser({});
+  }
+  return Logout
 };
 
 const GetCurrentUser = () => {
@@ -39,6 +42,6 @@ const GetCurrentUser = () => {
 export{
  Register,
  Login,
- Logout,
+ useLogOut,
  GetCurrentUser
 };

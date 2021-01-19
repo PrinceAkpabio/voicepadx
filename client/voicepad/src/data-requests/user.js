@@ -3,8 +3,8 @@ import AuthHeader from './auth.header';
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const API_URL = `http://localhost:5000/user/user/${user._id}`;
+const API_URL = `/users/user/${user.id}`;
 
-export const getUserPage = () => {
- return axios.get(API_URL, { headers: AuthHeader() });
+export const getUserPage = async() => {
+ return await axios.get(API_URL, { headers: AuthHeader() })
 }

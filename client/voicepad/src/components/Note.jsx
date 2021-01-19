@@ -1,32 +1,21 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 import Modal from "./modal";
-// import { response } from "express";
+
+import { truncate, DeleteUserNote } from "../Hooks/noteHook";
 const Note = ({ title, id, fetchUser }) => {
   const modalRef = useRef();
   const openModal = () => {
     modalRef.current.openModall();
   };
 
-  // DELETE NOTE
-  const handleDelete = async () => {
-    await axios
-      .delete(`/notes/note/${id}`)
-      .then((response) => alert(response.data));
-    await fetchUser();
-  };
-
-  function truncate(str, n) {
-    return str?.length > n ? str.substring(0, n - 1) + "..." : str;
-  }
   return (
     <>
       <Modal fetchUser={fetchUser} ref={modalRef} title={title} id={id} />
       <div className="speech-wrapper">
         <i
-          onClick={handleDelete}
+          onClick={() => DeleteUserNote(id, fetchUser)}
           id="delete-btn"
           className="fas fa-trash-alt"
         ></i>

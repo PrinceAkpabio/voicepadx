@@ -1,33 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 
 import NotesList from "../components/NotesList";
 
 import { UserContext } from "../data-requests/usercontext";
+import { useFetchUser } from "../Hooks/userHook";
 
 const User = () => {
   const { user, setUser } = useContext(UserContext);
   const [notelist, setNotelist] = useState(false);
-  const fetchUser = async () => {
-    const GetCurrentUser = () => {
-      return JSON.parse(localStorage.getItem("user"));
-    };
 
-    const CurrentUser = GetCurrentUser();
-
-    const API_URL = `/users/user/${CurrentUser && CurrentUser.id}`;
-
-    await fetch(API_URL, {
-      method: "GET",
-      headers: {
-        "x-access-token": CurrentUser && CurrentUser.accessToken,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .then(() => setNotelist(true))
-      .catch((err) => console.log("Fech Error: ", err));
-  };
+  const fetchUser = useFetchUser(setUser, setNotelist);
 
   useEffect(() => {
     fetchUser();

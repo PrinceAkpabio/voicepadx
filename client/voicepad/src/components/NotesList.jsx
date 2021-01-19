@@ -6,7 +6,7 @@ import { UserContext } from "../data-requests/usercontext";
 import NewNote from "./NewNote";
 
 const NotesList = ({ fetchUser }) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const notes = user.notes;
   console.log("NOTES: ", notes);
 
