@@ -15,9 +15,7 @@ const User = () => {
 
     const CurrentUser = GetCurrentUser();
 
-    const API_URL = `http://localhost:5000/users/user/${
-      CurrentUser && CurrentUser.id
-    }`;
+    const API_URL = `/users/user/${CurrentUser && CurrentUser.id}`;
 
     await fetch(API_URL, {
       method: "GET",
