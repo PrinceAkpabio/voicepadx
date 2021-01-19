@@ -7,7 +7,7 @@ export const validateForm = (errors) => {
 export const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
-export const useSignInFormChange = (errors, setUsername, setPassword) => {
+export const useSignInFormChange = (errors, setErrors, setUsername, setPassword) => {
  const handleChange = (event) => {
   const { name, value } = event.target;
 
@@ -61,7 +61,7 @@ export const useSignInFormSubmit = (errors, username, password, setUser, history
  };
  return handleSubmit;
 };
-export const useSignUpFormChange = (errors,password,setUsername,setEmail,setPassword,setConfirmPassword) => {
+export const useSignUpFormChange = (errors,setErrors,password,setUsername,setEmail,setPassword,setConfirmPassword) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 

@@ -31,6 +31,7 @@ const SignUpPagee = () => {
   const history = useHistory();
   const handleChange = useSignUpFormChange(
     errors,
+    setErrors,
     password,
     setUsername,
     setEmail,

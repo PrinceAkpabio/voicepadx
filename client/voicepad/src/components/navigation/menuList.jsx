@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { MenuItems, LogoItem } from "./menuItems";
 import { UserContext } from "../../data-requests/usercontext";
+import { useLogOut } from "../../data-requests/auth";
 
 import { Link as NavLink, useRouteMatch, useHistory } from "react-router-dom";
 
@@ -19,11 +20,7 @@ export default function MenuList({ menu }) {
   const { user, setUser } = useContext(UserContext);
   const history = useHistory();
   const matchUser = useRouteMatch(`/profile/${user.username}`);
-  const Logout = () => {
-    history.push("/");
-    localStorage.removeItem("user");
-    setUser({});
-  };
+  const Logout = useLogOut(history, setUser);
   return (
     <div className={`Nav-menu-wrapper ${menu && "active"}`}>
       <ul className="Nav-menu">

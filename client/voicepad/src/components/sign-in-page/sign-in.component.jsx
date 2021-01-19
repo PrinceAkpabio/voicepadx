@@ -22,7 +22,12 @@ const SignInPagee = () => {
     password: "",
   });
   const history = useHistory();
-  const handleChange = useSignInFormChange(errors, setUsername, setPassword);
+  const handleChange = useSignInFormChange(
+    errors,
+    setErrors,
+    setUsername,
+    setPassword
+  );
   const handleSubmit = useSignInFormSubmit(
     errors,
     username,
