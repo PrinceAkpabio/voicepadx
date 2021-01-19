@@ -58,7 +58,7 @@ const NewNote = ({ id, fetchUser }) => {
 
   const handleSubmit = async () => {
     await axios
-      .post(`http://localhost:5000/notes/add`, {
+      .post(`/notes/add`, {
         title,
         id,
       })

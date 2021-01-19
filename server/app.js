@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path')
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
@@ -8,6 +9,14 @@ require('dotenv').config({
 
 app = express();
 const PORT = process.env.PORT || 3001
+
+app.use(express.static(path.join(__dirname, '../client/voicepad/build')))
+
+// production 
+if(process.env.NODE_ENV === 'production'){
+ app.use(express.static(path.join(__dirname, '../client/voicepad/build'))); 
+}
+
 
 let corsOption = {
  origin: `http://localhost:${PORT}`
@@ -42,6 +51,17 @@ app.use('/users', userRouter);
 // NOTES ROUTE
 app.use('/notes', notesRouter)
 
+if (process.env.NODE_ENV !== 'production') {
+ //build 
+app.get('*', (req, res) => { res.sendFile(path.join(__dirname + '../client/voicepad/public/index.html')); })
+}
+
+if (process.env.NODE_ENV === 'production') {
+
+ app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname = '../client/voicepad/build/index.html'))
+  })
+}
 
 
 
