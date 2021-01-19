@@ -13,7 +13,7 @@ const Note = ({ title, id, fetchUser }) => {
   // DELETE NOTE
   const handleDelete = async () => {
     await axios
-      .delete(`http://localhost:5000/notes/note/${id}`)
+      .delete(`/notes/note/${id}`)
       .then((response) => alert(response.data));
     await fetchUser();
   };
@@ -23,7 +23,7 @@ const Note = ({ title, id, fetchUser }) => {
   }
   return (
     <>
-      <Modal ref={modalRef} title={title} id={id} />
+      <Modal fetchUser={fetchUser} ref={modalRef} title={title} id={id} />
       <div className="speech-wrapper">
         <i
           onClick={handleDelete}

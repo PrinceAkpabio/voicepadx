@@ -8,7 +8,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-const UpdateNote = ({ Title, Id }) => {
+const UpdateNote = ({ Title, Id, fetchUser, closeModal }) => {
   const { user, setUser } = useContext(UserContext);
   const [currentText, setCurrentText] = useState(Title);
   const [copy, setCopySuccess] = useState("Copy");
@@ -59,10 +59,12 @@ const UpdateNote = ({ Title, Id }) => {
   const id = Id;
   console.log(currentText);
   const handleSubmit = async () => {
-    await axios.post(`http://localhost:5000/notes/note/${id}`, {
+    await axios.post(`/notes/note/${id}`, {
       title,
       id,
     });
+    await fetchUser();
+    await closeModal();
   };
 
   return (

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-const API_URL = "http://localhost:5000/users/"
+const API_URL = "/users/"
 
 const Register = (username, email, password) => {
   

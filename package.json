@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+   "engines": {
+    "node": "12.18.2",
+    "yarn": "1.22.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cd server && nodemon app",
-    "client": "cd .. && cd client && cd voicepad && yarn start",
-    "start": "concurrently\"npm run dev\"\"npm run client\""
+    "client-install": "cd client/voicepad && yarn install",
+    "start": "cd server && nodemon app",
+    "client": "cd client/voicepad && yarn start",
+    "startdev": "concurrently\"npm run start\"\"npm run client\"",
+    "heroku-postbuild":  "NPM_CONFIG_PRODUCTION=false cd client/voicepad && yarn install && yarn run build"
   },
   "repository": {
     "type": "git",
