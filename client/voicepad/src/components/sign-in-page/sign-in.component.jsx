@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { UserContext } from "../../data-requests/usercontext";
 import FormInput from "../custom-input/custom-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { Login } from "../../data-requests/auth";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import mic from "../../Assets/mic.png";
+import { Link, useHistory } from "react-router-dom";
 
-const validateForm = (errors) => {
-  let valid = true;
-  Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
-  return valid;
-};
+import {
+  useSignInFormChange,
+  useSignInFormSubmit,
+} from "../../Hooks/signinandsignupHook";
 
 const SignInPagee = () => {
   const { user, setUser } = useContext(UserContext);
@@ -24,62 +21,20 @@ const SignInPagee = () => {
     username: "",
     password: "",
   });
-
   const history = useHistory();
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    switch (name) {
-      case "username":
-        errors.username =
-          value.length < 5
-            ? "Full Name must be at least 5 characters long!"
-            : "";
-        break;
-      case "password":
-        errors.password =
-          value.length < 8
-            ? "Password must be at least 8 characters long!"
-            : "";
-        break;
-      default:
-        break;
-    }
-
-    event.target.name === "username"
-      ? setUsername({ [name]: value })
-      : event.target.name === "password"
-      ? setPassword({ [name]: value })
-      : alert("Wrong form Selection");
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (validateForm(errors)) {
-      console.info("Valid Form");
-    } else {
-      console.error("Invalid Form");
-    }
-
-    try {
-      Login(username.username, password.password).then((response) => {
-        console.log("login object", response);
-
-        if (response.accessToken) {
-          setUser(response);
-          // <Redirect to="/" />;
-          history.push(`/profile/${username.username}`);
-        }
-      });
-      // if (history) {
-
-      // }
-    } catch (error) {
-      console.error("Error in creating User Docs", error);
-    }
-  };
+  const handleChange = useSignInFormChange(
+    errors,
+    setErrors,
+    setUsername,
+    setPassword
+  );
+  const handleSubmit = useSignInFormSubmit(
+    errors,
+    username,
+    password,
+    setUser,
+    history
+  );
 
   console.log(user);
   console.log(username);

@@ -1,71 +1,32 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { UserContext } from "../data-requests/usercontext";
+import React, { useState } from "react";
 
-import axios from "axios";
-import useSound from "use-sound";
-import Chime from "../Assets/chime.wav";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+// import useSound from "use-sound";
+// import Chime from "../Assets/chime.wav";
+// import SpeechRecognition, {
+//   useSpeechRecognition,
+// } from "react-speech-recognition";
+
+import {
+  UpdateUserNote,
+  handleChange,
+  handleCopy,
+  MountedCopyTimer,
+} from "../Hooks/noteHook";
 
 const UpdateNote = ({ Title, Id, fetchUser, closeModal }) => {
-  const { user, setUser } = useContext(UserContext);
   const [currentText, setCurrentText] = useState(Title);
   const [copy, setCopySuccess] = useState("Copy");
-  const { transcript, resetTranscript } = useSpeechRecognition;
+  // const { transcript, resetTranscript } = useSpeechRecognition;
 
-  // CHANGE COPY SPAN TEXT
-  useEffect(() => {
-    const copyTimer = setTimeout(() => {
-      if (copy === "Copied") {
-        setCopySuccess("Copy");
-      }
-    }, 2000);
-    console.log("TITLE: ", Title, "ID: ", Id);
-    return () => clearTimeout(copyTimer);
-  }, [copy, setCurrentText, Title, Id]);
-
+  // Change Copied Text
+  MountedCopyTimer(copy, setCopySuccess);
   // SOUND FOR MICROPHONE
-  const [play] = useSound(Chime);
-
-  // COPY AND PASTE FEATURE
-  const handleCopy = (e) => {
-    const selection = currentText;
-    const Copied = navigator.clipboard.writeText(selection);
-
-    if (Copied) {
-      setCopySuccess("Copied");
-    }
-  };
-  // HANDLE SPEECH CONVERSION
-  const HandleSpeech = async () => {
-    await SpeechRecognition.startListening();
-    const result = JSON.stringify(transcript);
-    setCurrentText(result);
-    console.log(currentText);
-    //   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    //    return null
-    //  }
-  };
-
-  // MAKE TEXT FEILD EDITABLE
-  const handleChange = (e) => {
-    e.preventDefault();
-    setCurrentText(e.target.value);
-  };
+  // const [play] = useSound(Chime);
 
   // Update Note
   const title = currentText;
   const id = Id;
   console.log(currentText);
-  const handleSubmit = async () => {
-    await axios.post(`/notes/note/${id}`, {
-      title,
-      id,
-    });
-    await fetchUser();
-    await closeModal();
-  };
 
   return (
     <>
@@ -75,7 +36,11 @@ const UpdateNote = ({ Title, Id, fetchUser, closeModal }) => {
         </h2>
 
         <span className="copy-container">
-          <i onClick={handleCopy} id="copy" className="far fa-copy">
+          <i
+            onClick={() => handleCopy(currentText, setCopySuccess)}
+            id="copy"
+            className="far fa-copy"
+          >
             <span className="tooltip">{copy}</span>
           </i>
         </span>
@@ -83,7 +48,7 @@ const UpdateNote = ({ Title, Id, fetchUser, closeModal }) => {
       <div className="speech-wrapper">
         <textarea
           type="text"
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setCurrentText)}
           className="text"
           value={currentText}
           rows="5"
@@ -96,8 +61,7 @@ const UpdateNote = ({ Title, Id, fetchUser, closeModal }) => {
         ></i> */}
         <i
           id="mic"
-          onClick={handleSubmit}
-          // className="fas fa-microphone"
+          onClick={() => UpdateUserNote(title, id, fetchUser, closeModal)}
         >
           SUBMIT
         </i>

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { Switch, Route, Redirect, useParams } from 'react-router-dom'
+import React, {useState} from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom'
 import {UserContext} from '../src/data-requests/usercontext'
 import Footer from './components/Footer';
 import Naviagtion from './components/navigation/naviagtion';
@@ -10,7 +10,7 @@ import AccessPage from './pages/signinandsignup';
 import User from './pages/user';
 function App() {
   const [user, setUser] = useState({});
-  const { name } = useParams();
+  // const { name } = useParams();
   console.log('App State: ',user);
   const Name = user.username;
   console.log('User Name: ',Name);

@@ -1,22 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../data-requests/usercontext";
+import React, { useState } from "react";
 import FormInput from "../custom-input/custom-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { Register } from "../../data-requests/auth";
 import { Link, useHistory } from "react-router-dom";
-import mic from "../../Assets/mic.png";
 
-const validEmailRegex = RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-);
-const validateForm = (errors) => {
-  let valid = true;
-  Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
-  return valid;
-};
+import {
+  useSignUpFormChange,
+  useSignUpFormSubmit,
+} from "../../Hooks/signinandsignupHook";
 
 const SignUpPagee = () => {
-  const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState({
     username: "",
   });
@@ -37,72 +29,24 @@ const SignUpPagee = () => {
   });
 
   const history = useHistory();
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    switch (name) {
-      case "username":
-        errors.username =
-          value.length < 5
-            ? "Full Name must be at least 5 characters long!"
-            : "";
-        break;
-      case "email":
-        errors.email = validEmailRegex.test(value) ? "" : "Email is not valid!";
-        break;
-      case "password":
-        errors.password =
-          value.length < 8
-            ? "Password must be at least 8 characters long!"
-            : "";
-        break;
-      case "confirmPassword":
-        errors.confirmPassword =
-          value === password.password ? "" : "Password doesn't match";
-        break;
-      default:
-        break;
-    }
-
-    event.target.name === "username"
-      ? setUsername({ [name]: value })
-      : event.target.name === "email"
-      ? setEmail({ [name]: value })
-      : event.target.name === "password"
-      ? setPassword({ [name]: value })
-      : event.target.name === "confirmPassword"
-      ? setConfirmPassword({ [name]: value })
-      : alert("Wrong form Selection");
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (validateForm(errors)) {
-      console.info("Valid Form");
-    } else {
-      console.error("Invalid Form");
-    }
-
-    try {
-      Register(username.username, email.email, password.password).then(
-        (response) => {
-          alert(response.data);
-
-          history.push(`/login`);
-        }
-      );
-      // if (history) {
-
-      // }
-    } catch (error) {
-      console.error("Error in creating User Docs", error);
-    }
-  };
+  const handleChange = useSignUpFormChange(
+    errors,
+    setErrors,
+    password,
+    setUsername,
+    setEmail,
+    setPassword,
+    setConfirmPassword
+  );
+  const handleSubmit = useSignUpFormSubmit(
+    errors,
+    username,
+    email,
+    password,
+    history
+  );
 
   // const { name, ...otherProps } = user;
-  console.log(user);
   console.log(email);
   console.log(username);
   console.log(password);
