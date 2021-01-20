@@ -1,6 +1,6 @@
 import { set } from 'mongoose';
 import React, {useState, useEffect} from 'react';
-import { Switch, Route, useParams, Redirect } from 'react-router-dom'
+import { Switch, Route, useParams, Redirect, useRouteMatch } from 'react-router-dom'
 import {UserContext} from '../src/data-requests/usercontext'
 import Footer from './components/Footer';
 import Naviagtion from './components/navigation/naviagtion';
@@ -13,6 +13,8 @@ function App() {
   const [user, setUser] = useState({});
   const { name } = useParams();
   console.log('App State: ', user);
+  const loginMatch = useRouteMatch('/login')?.isExact;
+  const registerMatch = useRouteMatch('/signup')?.isExact;
 
  const users = JSON.parse(localStorage.getItem("user")) ; 
       const TOKEN = users?.accessToken ? users.accessToken : false;
@@ -26,6 +28,14 @@ function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <Naviagtion name={Name} />
         <Switch>
+          {
+          TOKEN && loginMatch ?
+            <Redirect to={`/profile/${Name}`} />
+            :
+          TOKEN && registerMatch ? 
+            <Redirect to={`/profile/${Name}`} />
+            : null
+          }
           <Route exact path='/signup' component = {AccessPage}  />
           <Route exact path='/login' component={SignInPagee} />
           <PrivateRoute

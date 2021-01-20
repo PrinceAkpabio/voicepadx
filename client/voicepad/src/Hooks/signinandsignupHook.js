@@ -36,7 +36,7 @@ export const useSignInFormChange = (errors, setErrors, setUsername, setPassword)
  };
  return handleChange;
 };
-export const useSignInFormSubmit = (errors, username, password, setUser, history) => {
+export const useSignInFormSubmit = (errors, username, password, setUser, history, location) => {
  const handleSubmit = (event) => {
   event.preventDefault();
 
@@ -49,10 +49,11 @@ export const useSignInFormSubmit = (errors, username, password, setUser, history
   try {
    Login(username.username, password.password).then((response) => {
     console.log("login object", response);
-
+     const { state } = location;
     if (response.accessToken) {
      setUser(response);
-     history.push(`/profile/${username.username}`);
+     
+     history.push(state?.from || `/profile/${username.username}`);
     }
    });
   } catch (error) {

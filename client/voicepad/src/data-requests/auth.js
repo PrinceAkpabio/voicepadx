@@ -28,9 +28,9 @@ const Login = async(username, password) => {
 
 const useLogOut = (history,setUser) => { 
   const Logout = () => {
-    history.push("/");
+    history.push("/login");
     localStorage.removeItem("user");
-    setUser({});
+    // setUser({});
   }
   return Logout
 };
