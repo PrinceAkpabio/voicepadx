@@ -12,7 +12,7 @@ import {
   MountedCopyTimer,
 } from "../Hooks/noteHook";
 
-const NewNote = ({ id, fetchUser }) => {
+const NewNote = ({ id }) => {
   const [currentText, setCurrentText] = useState("");
   const [copy, setCopySuccess] = useState("Copy");
   // const { transcript, resetTranscript } = useSpeechRecognition;
@@ -57,7 +57,7 @@ const NewNote = ({ id, fetchUser }) => {
         ></i> */}
         <i
           id="mic"
-          onClick={() => AddNewNote(title, id, setCurrentText, fetchUser)}
+          onClick={() => AddNewNote(title, id, setCurrentText)}
           // className="fas fa-microphone"
         >
           SUBMIT

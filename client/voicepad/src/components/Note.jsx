@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Modal from "./modal";
 
 import { truncate, DeleteUserNote } from "../Hooks/noteHook";
-const Note = ({ title, id, fetchUser }) => {
+const Note = ({ title, id }) => {
   const modalRef = useRef();
   const openModal = () => {
     modalRef.current.openModall();
@@ -12,10 +12,10 @@ const Note = ({ title, id, fetchUser }) => {
 
   return (
     <>
-      <Modal fetchUser={fetchUser} ref={modalRef} title={title} id={id} />
+      <Modal ref={modalRef} title={title} id={id} />
       <div className="speech-wrapper">
         <i
-          onClick={() => DeleteUserNote(id, fetchUser)}
+          onClick={() => DeleteUserNote(id)}
           id="delete-btn"
           className="fas fa-trash-alt"
         ></i>

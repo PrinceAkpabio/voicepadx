@@ -69,7 +69,7 @@ router.route('/signin').post((req, res) => {
       });
     }
 
-    let token = jwt.sign({ id: user.id }, secret, { expiresIn: 86400 })
+    let token = jwt.sign({ id: user._id }, secret, { expiresIn: 86400 })
 
     res.status(200).send({
       id: user._id,

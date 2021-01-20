@@ -34,7 +34,7 @@ export const MountedCopyTimer = (copy, setCopySuccess) => {
     //    return null
     //  }
 };
- export const AddNewNote = async (title,id,setCurrentText, fetchUser) => {
+ export const AddNewNote = async (title,id,setCurrentText) => {
     await axios
       .post(`/notes/add`, {
         title,
@@ -43,8 +43,6 @@ export const MountedCopyTimer = (copy, setCopySuccess) => {
       .then(async (response) => await alert(response.data));
 
     await setCurrentText("");
-
-    await fetchUser();
 };
   export const AddNewPublicNote = (currentText, setPublicUser, setCurrentText) => {
     localStorage.setItem("public-user", [currentText]);
@@ -53,19 +51,17 @@ export const MountedCopyTimer = (copy, setCopySuccess) => {
     setPublicUser(publicUser);
     setCurrentText("");
 };
-  export const UpdateUserNote = async (title, id, fetchUser, closeModal) => {
+  export const UpdateUserNote = async (title, id, closeModal) => {
     await axios.post(`/notes/note/${id}`, {
       title,
       id,
     });
-    await fetchUser();
     await closeModal();
 };
-  export const DeleteUserNote = async (id, fetchUser) => {
+  export const DeleteUserNote = async (id) => {
     await axios
       .delete(`/notes/note/${id}`)
       .then((response) => alert(response.data));
-    await fetchUser();
 };
   export const DeletePublicNote = (setNote) => {
     localStorage.removeItem("public-user");

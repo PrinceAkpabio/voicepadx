@@ -13,7 +13,7 @@ import {
   MountedCopyTimer,
 } from "../Hooks/noteHook";
 
-const UpdateNote = ({ Title, Id, fetchUser, closeModal }) => {
+const UpdateNote = ({ Title, Id, closeModal }) => {
   const [currentText, setCurrentText] = useState(Title);
   const [copy, setCopySuccess] = useState("Copy");
   // const { transcript, resetTranscript } = useSpeechRecognition;
@@ -59,10 +59,7 @@ const UpdateNote = ({ Title, Id, fetchUser, closeModal }) => {
           onClick={HandleSpeech}
           className="fas fa-microphone-alt"
         ></i> */}
-        <i
-          id="mic"
-          onClick={() => UpdateUserNote(title, id, fetchUser, closeModal)}
-        >
+        <i id="mic" onClick={() => UpdateUserNote(title, id, closeModal)}>
           SUBMIT
         </i>
       </div>

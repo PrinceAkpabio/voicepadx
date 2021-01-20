@@ -59,7 +59,6 @@ const Modal = forwardRef((props, ref) => {
                 <div className="note">
                   <UpdateNote
                     closeModal={closeModal}
-                    fetchUser={props.fetchUser}
                     Id={props.id}
                     Title={props.title}
                   />
