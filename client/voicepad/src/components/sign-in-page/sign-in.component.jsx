@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { UserContext } from "../../data-requests/usercontext";
 import FormInput from "../custom-input/custom-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import {
   useSignInFormChange,
@@ -22,6 +22,7 @@ const SignInPagee = () => {
     password: "",
   });
   const history = useHistory();
+  const location = useLocation();
   const handleChange = useSignInFormChange(
     errors,
     setErrors,
@@ -33,7 +34,8 @@ const SignInPagee = () => {
     username,
     password,
     setUser,
-    history
+    history,
+    location
   );
 
   console.log(user);

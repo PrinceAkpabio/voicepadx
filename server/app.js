@@ -53,7 +53,7 @@ app.use('/notes', notesRouter)
 
 if (process.env.NODE_ENV !== 'production') {
  //build 
-app.get('*', (req, res) => { res.sendFile(path.join(__dirname + '../client/voicepad/public/index.html')); })
+app.get('*', (req, res) => { res.sendFile('index.html', { root: '../client/voicepad/public/' }); })
 }
 
 if (process.env.NODE_ENV === 'production') {
