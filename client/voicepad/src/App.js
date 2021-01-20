@@ -14,7 +14,7 @@ function App() {
   const { name } = useParams();
   console.log('App State: ', user);
 
- let users = JSON.parse(localStorage.getItem("user")) ; 
+ const users = JSON.parse(localStorage.getItem("user")) ; 
       const TOKEN = users?.accessToken ? users.accessToken : false;
       const Name = users?.username ? users.username : 'user'
       console.log('Username: ',Name);
