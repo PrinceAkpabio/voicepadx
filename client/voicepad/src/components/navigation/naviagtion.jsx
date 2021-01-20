@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MenuButton from "./menuButton";
 import MenuList, { Logo } from "./menuList";
 
-const Naviagtion = () => {
+const Naviagtion = ({ name }) => {
   const [menu, setMenu] = useState(false);
   const navRef = useRef();
 
@@ -49,7 +49,12 @@ const Naviagtion = () => {
     <div className="Nav">
       <Logo />
       <MenuList menu={menu} />
-      <MenuButton ToggleMenu={ToggleMenu} menu={menu} navRef={navRef} />
+      <MenuButton
+        ToggleMenu={ToggleMenu}
+        menu={menu}
+        navRef={navRef}
+        name={name}
+      />
     </div>
   );
 };

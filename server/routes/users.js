@@ -86,9 +86,9 @@ router.route('/user/:id').get([verifyToken],  (req, res) => {
   const id = req.params.id
 
   users.findById(id).populate('notes')
-    .then(user => {res.send(user)})
-    .catch(err => res.status(400)
-    .json('Error occured while fetching user: ' , err))
+    .then(user => res.send(user))
+    .catch(err => res.send(err))
+    // .json('Error occured while fetching user: ' , err))
 })
 
 // DELETE SINGLE USER
