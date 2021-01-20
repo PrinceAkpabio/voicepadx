@@ -59,7 +59,7 @@ app.get('*', (req, res) => { res.sendFile(path.join(__dirname + '../client/voice
 if (process.env.NODE_ENV === 'production') {
 
  app.get('*', (req, res) => {
-   res.sendFile(path.join(__dirname + '../client/voicepad/build/index.html'))
+   res.sendFile(path.join(__dirname = '../client/voicepad/build/index.html'))
   })
 }
 
