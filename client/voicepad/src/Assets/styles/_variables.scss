@@ -28,3 +28,8 @@ $mobile-lg: 425px;
 @mixin transition-slower {
   transition: all 1.5s ease-in-out;
 }
+@mixin mobile-menu {
+  @media screen and (max-width: 590px) {
+    @content;
+  }
+}

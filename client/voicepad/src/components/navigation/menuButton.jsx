@@ -6,7 +6,7 @@ import { useLogOut } from "../../data-requests/auth";
 export default function MenuButton({ menu, ToggleMenu, navRef }) {
   const { user, setUser } = useContext(UserContext);
   const history = useHistory();
-  const matchHome = useRouteMatch("/home");
+  const matchHome = useRouteMatch("/");
   const matchUser = useRouteMatch(`/profile/${user.username}`);
   const Logout = useLogOut(history, setUser);
   return (
