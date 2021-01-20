@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useSWR from "swr";
 
 import NotesList from "../components/NotesList";
@@ -9,21 +9,13 @@ import Loading from "./loadingPage";
 
 const User = () => {
   const { fetchUser, API_URL, TOKEN } = useFetchUser();
-  useEffect(() => {
-    const GetCurrentUser = () => {
-      let user = JSON.parse(localStorage.getItem("user"));
-
-      if (user.accessToken) {
-        return user._id;
-      }
-    };
-    GetCurrentUser();
-  }, []);
   const { data, error } = useSWR(TOKEN ? API_URL : null, fetchUser, {
     refreshInterval: 2000,
     // revalidateOnMount: true,
   });
 
+  console.log("User Data :", API_URL);
+  console.log("User Data :", TOKEN);
   console.log("User Data :", data);
   console.log("User Error :", error);
 
