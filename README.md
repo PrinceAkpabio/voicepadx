@@ -10,11 +10,17 @@ Fullstack webapp built using the MERN stack and hosted on Heroku. Voicepadx is a
 
 # Tech stack
 React.js
+
 Axios
+
 MongoDB
+
 Express
+
 Node.js
+
 SWR
+
 Context API
 
 # Team
